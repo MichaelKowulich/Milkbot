@@ -1,0 +1,19 @@
+{
+  "name": "milkbot",
+  "version": "1.0.0",
+  "description": "A 1975 Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Kowulich, Inspiration and Content Provider: Jessica Mink",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "child_process": "^1.0.2",
+    "discord.js": "^12.2.0",
+    "number-to-words": "^1.2.4",
+    "request": "^2.88.2",
+    "youtube-search": "^1.1.4"
+  }
+}
