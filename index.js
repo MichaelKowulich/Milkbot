@@ -30,17 +30,14 @@ bot.on('message', async message=> {
     let args = message.content.substring(PREFIX.length).split(" ");
 
     if (message.content.startsWith('>')) {
-    switch (args[0]) {
-        case 'Ping':
-        case 'ping':
+    switch (args[0].toUpperCase()) {
+        case 'PING':
             bot.commands.get('ping').execute(message, args);
             break;
-        case 'Pong':
-        case 'pong':
+        case 'PONG':
             bot.commands.get('pong').execute(message, args);
             break;
-        case 'Suggest':
-        case 'suggest':
+        case 'SUGGEST':
             try {
             if ((args[1].toUpperCase() === "THE" && args[2].toString().toUpperCase() == '1975') || (args[1].toString().toUpperCase() === "1975")) {
             var max = 86;
@@ -561,10 +558,8 @@ bot.on('message', async message=> {
         break; // Break for >Suggest case
         //-Whats the vibe?
         //---------------------------------------------
-        case 'Whats':
-        case 'whats':
-        case 'what\'s':
-        case 'What\'s':
+        case 'WHATS':
+        case 'WHAT\'S':
             try {
                 if (args[1].toUpperCase() == 'THE' && (args[2].toUpperCase() == 'VIBE' || args[2].toUpperCase() == 'VIBE?')) {
                     message.channel.send("I wouldn't know, I'm normally in bed at this time");
@@ -573,23 +568,16 @@ bot.on('message', async message=> {
 
             }
         break;
-        case 'whatsthevibe':
-        case 'Whatsthevibe':
-        case 'WhatsTheVibe':
-        case 'what\'sthevibe':
+        case 'WHATSTHEVIBE':
             message.channel.send("I wouldn't know, I'm normally in bed at this time");
         break; // Break for whatsthevibe 
         
         //-She said
         //-----------------------------------------------
-        case 'shesaid':
-        case 'SheSaid':
-        case 'Shesaid':
-        case 'sheSaid':
+        case 'SHESAID':
             bot.commands.get('sheSaid').execute(message, args);
         break; // end of "shesaid"
-        case 'She':
-        case 'she':
+        case 'SHE':
             try {
                 if(args[1].toUpperCase() === 'SAID') {
                     bot.commands.get('sheSaid').execute(message, args);
@@ -598,22 +586,16 @@ bot.on('message', async message=> {
         break;
         //-MilkWalker
         //----------------------------------------------
-        case 'milkwalker':
-        case 'Milkwalker':
-        case 'milkWalker':
-        case 'MilkWalker':
+        case 'MILKWALKER':
             message.channel.send("", {files:["./milkwalker.jpg"]});
         break;
         //-Poll
         //----------------------------------------------
-        case 'poll':
-        case 'Poll':
+        case 'POLL':
             bot.commands.get('poll').execute(message, args, bot);
         break;
         //-Image
         //----------------------------------------------
-        case 'image':
-        case 'Image':
         case 'IMAGE':
             try {
                 if (!args[1] || args[1].toUpperCase() == "THE1975" || (args[1].toUpperCase() === "THE" && args[2] === "1975")) {
@@ -649,18 +631,11 @@ bot.on('message', async message=> {
         break;
         //-Gif
         //------------------------------------------------
-        case 'gif':
         case 'GIF':
-        case 'GIf':
-        case 'gIF':
-        case 'Gif':
             bot.commands.get('gif').execute(message,args, "the 1975 gifs");
         break;
         //-Artwork
         //----------------------------------------------
-        case 'artwork':
-        case 'ArtWork':
-        case 'Artwork':
         case 'ARTWORK':
             try {
             if (!args[1]) {
@@ -764,8 +739,7 @@ bot.on('message', async message=> {
         break;
         //-Help
         //----------------------------------------------
-        case 'Help':
-        case 'help':
+        case 'HELP':
     var exampleEmbed = new Discord.MessageEmbed()
                 .setColor('	#3CB371')
                 .setTitle('--:milk: MilkBot Menu :milk:--')
