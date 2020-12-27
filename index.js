@@ -706,12 +706,12 @@ bot.on("message", async (message) => {
       //-She said
       //-----------------------------------------------
       case "SHESAID":
-        bot.commands.get("sheSaid").execute(message, args);
+        bot.commands.get("sheSaid").execute(message, args, db);
         break; // end of "shesaid"
       case "SHE":
         try {
           if (args[1].toUpperCase() === "SAID") {
-            bot.commands.get("sheSaid").execute(message, args);
+            bot.commands.get("sheSaid").execute(message, args, db);
           }
         } catch (TypeError) {}
         break;
