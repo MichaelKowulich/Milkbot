@@ -1,30 +1,41 @@
 const Discord = require("discord.js");
+const { MessageAttachment } = require('discord.js');
 var numberToWords = require("number-to-words");
-const cp = require("child_process");
-const exec_options = {
-  cwd: null,
-  env: null,
-  encoding: "utf8",
-  timeout: 0,
-  maxBuffer: 200 * 1024,
-  killSignal: "SIGTERM",
-};
+const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
+
+const width = 1600;
+const height = 1200;
+
 
 module.exports = {
   name: "poll",
   description: "Allows User Polls",
   async execute(message, args, bot) {
     try {
+      //Regex pattern that will match anything between quotes
       const myRe = /\"(.*?)\"/g;
+      //Iphones and mobile devices use different quotes, so process those as normal ones
       var inner = args.toString().replace(/”/g, '"').replace(/“/g, '"');
+      // Match what matches the pattern
       var options = inner.match(myRe);
-
+      
+      /////////////////////////////////////////////////////////////////////////
+      //
+      //    If user requests help, send em to the same place as a syntax error
+      //    Or if the user does not add anything to vote on, syntax error!
+      //
       if (options[0] == "help") {
         throw TypeError;
       }
       if (!options[1]) {
         throw TypeError;
       }
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      //    Create an embed that will prettify the the display of the poll
+      //    Also, make the title bold!
+      //
       const exampleEmbed = new Discord.MessageEmbed()
         .setColor("	#3CB371")
         .setTitle(
@@ -32,7 +43,13 @@ module.exports = {
             options[0].concat("**").replace(/,/g, " ").replace(/\"/g, "")
           )
         );
-
+      
+      ///////////////////////////////////////////////////////////////////////////
+      //
+      //   Adding things to the embed, such as number of the option,
+      //   the options themselves, and the emojis that are the numeric
+      //   representation of the option.
+      //
       var PollNumber = "";
       for (i = 1; i < options.length; i++) {
         if (i > 10) {
@@ -48,8 +65,20 @@ module.exports = {
           value: options[i].replace(/,/g, " ").replace(/\"/g, ""),
         });
       }
+
+      ////////////////////////////////////////////////////////////////////////////
+      //
+      //    Send it away! But we need to hang onto the message ID so that in the
+      //    future we can grab some meaningful data from it (reactions, etc)
+      //
       let messageObject = await message.channel.send(exampleEmbed);
       let messageID = messageObject.id;
+
+      ////////////////////////////////////////////////////////////////////////////
+      //
+      //    Fetch the message after you send it, and add some reacts to it
+      //    to give the user the illusion of an interactive menu
+      //
       message.channel.messages.fetch(messageID).then((messageReaction) => {
         for (i = 1; i < options.length; i++) {
           if (i == 1) {
@@ -84,7 +113,9 @@ module.exports = {
           }
         }
       });
-      setTimeout(pollResults, 1000 * 60 * 60 * 24, messageObject, options);
+
+      //Run the function pollResults after X hours (default to 24)
+      setTimeout(pollResults, 1000 * 6, messageObject, options)// 1000 (ms) = 1 sec, *60 = 1 min, *60 = 1hr, * 24 = 1 day;
     } catch (TypeError) {
       var err = new Discord.MessageEmbed()
         .setColor("#3CB371")
@@ -94,37 +125,94 @@ module.exports = {
         .addFields({
           name: '>poll "Question to Poll" "Opt 1" "Opt 2" "Opt3" ... "Opt 10" ',
           value:
-            "Note: Questions and options must be between double quotes. The most options MilkBot will allow is 10 and each poll must have at least 1 option.",
+            "Note: Questions and options must be between double quotes. The most options this bot will allow is 10 and each poll must have at least 1 option.",
         });
       message.channel.send(err);
     }
 
-    //RUN INDEX FROM COMMAND LINE OTHERWISE THIS WILL NOT WORK
-    function pollResults(messageOBJ, opts) {
+    async function pollResults(messageOBJ, opts) {
       var reacts = messageOBJ.reactions.cache.array();
+      var question;
+      var answers = [];
+      var reactionCounts = [];
+      //To ensure post was not deleted
       if (reacts) {
         var categorical = [];
         for (i = 0; i < options.length; i++) {
+          //A max of ten options is allowed, even if user specifies more, it will drop the rest
           if (i > 10) {
             break;
           }
           categorical[i] = opts[i].replace(/,/g, " ").replace(/\"/g, "");
         }
-        var cmd = "processing-java --sketch=./pollOutput --run ";
-        cmd = cmd.concat('"').concat(categorical[0]).concat('" ');
+        question = categorical[0];
+        //Seeding labels
         for (i = 0; i < categorical.length - 1; i++) {
-          cmd = cmd
-            .concat('"')
-            .concat(categorical[i + 1])
-            .concat('" ');
-          cmd = cmd.concat(reacts[i].count - 1).concat(" ");
+          answers[i] = categorical[i+1];
+          reactionCounts[i] = (reacts[i].count - 1);
         }
-        console.log(cmd);
-        cp.exec(cmd, exec_options, (err, stdout, stderr) => {
-          console.log("Drawing Executing...");
-          console.log(stdout);
-          message.reply("", { files: ["./pollOutput/output.png"] });
-        });
+        const canvas = new ChartJSNodeCanvas ({width, height, chartCallback: (ChartJS) => {
+          /*
+          ChartJS.plugins.register({
+            beforeDraw: (chartInstance) => {
+              const { chart } = chartInstance;
+              const { ctx } = chartInstance.chart;
+              ctx.fillStyle = 'white';
+              ctx.fillRect(0,0, chart.width, chart.height)
+            } 
+          })*/}});
+        const configuration = {
+          type: 'bar',
+          data: {
+            labels: answers,
+            datasets: [
+              {
+                data: reactionCounts,
+                label: "Number of votes",
+                backgroundColor: '#7289d9',
+              }
+            ]
+          },
+          options: {
+            title: {
+              display: true,
+              text: question,
+              fontColor: '#7289d9',
+              fontSize: 48
+            },
+            legend: {
+              display: true,
+              labels: {
+                fontColor: '#7289d9',
+                fontSize: 36
+              },
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  fontColor: '#7289d9',
+                  fontSize: 36
+                },
+                gridLines: {
+                  lineWidth: 8
+                }
+              }],
+              xAxes: [{
+                ticks: {
+                  fontColor: '#7289d9',
+                  fontSize: 36
+                }
+              }]
+            }
+          }
+        }
+
+        const image = await canvas.renderToBuffer(configuration);
+        const attachment = new MessageAttachment(image);
+
+        message.reply("", attachment);
+
+
       }
     }
   },
