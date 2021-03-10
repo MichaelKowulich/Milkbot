@@ -115,7 +115,7 @@ module.exports = {
       });
 
       //Run the function pollResults after X hours (default to 24)
-      setTimeout(pollResults, 1000 * 6, messageObject, options)// 1000 (ms) = 1 sec, *60 = 1 min, *60 = 1hr, * 24 = 1 day;
+      setTimeout(pollResults, 1000 * 60 * 60 * 24, messageObject, options)// 1000 (ms) = 1 sec, *60 = 1 min, *60 = 1hr, * 24 = 1 day;
     } catch (TypeError) {
       var err = new Discord.MessageEmbed()
         .setColor("#3CB371")
