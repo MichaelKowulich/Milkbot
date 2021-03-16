@@ -130,13 +130,18 @@ module.exports = {
       message.channel.send(err);
     }
 
-    async function pollResults(messageOBJ, opts) {
-      var reacts = messageOBJ.reactions.cache.array();
+    function pollResults(messageOBJ, opts) {
+      var reacts = messageOBJ.reactions.cache;
+      var index = 0;
       var question;
       var answers = [];
       var reactionCounts = [];
       //To ensure post was not deleted
       if (reacts) {
+        reacts.map(react => {
+          reactionCounts[index] = react.count - 1;
+          index++;
+        });
         var categorical = [];
         for (i = 0; i < options.length; i++) {
           //A max of ten options is allowed, even if user specifies more, it will drop the rest
@@ -149,7 +154,6 @@ module.exports = {
         //Seeding labels
         for (i = 0; i < categorical.length - 1; i++) {
           answers[i] = categorical[i+1];
-          reactionCounts[i] = (reacts[i].count - 1);
         }
         const canvas = new ChartJSNodeCanvas ({width, height, chartCallback: (ChartJS) => {
           /*
@@ -207,13 +211,19 @@ module.exports = {
           }
         }
 
-        const image = await canvas.renderToBuffer(configuration);
-        const attachment = new MessageAttachment(image);
-
-        message.reply("", attachment);
+        console.log(question.toString());
+        console.log(answers.toString());
+        console.log(reactionCounts.toString());
+        generateImage(canvas, configuration)
 
 
       }
     }
-  },
+
+    async function generateImage (canvas, configuration){
+      const image = await canvas.renderToBuffer(configuration);
+      const attachment = new MessageAttachment(image);
+      message.reply("", attachment);
+    }
+  }
 };
