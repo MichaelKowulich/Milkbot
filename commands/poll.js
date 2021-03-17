@@ -194,6 +194,7 @@ module.exports = {
             scales: {
               yAxes: [{
                 ticks: {
+                  beginAtZero: true,
                   fontColor: '#7289d9',
                   fontSize: 36
                 },
