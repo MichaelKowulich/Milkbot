@@ -1,35 +1,16 @@
-const cheerio = require('cheerio');
-const request = require('request');
+const fetch = require('node-fetch');
+const config = require('../config.json');
 
 module.exports = {
     name: 'gif',
     description: "gives random 1975 image",
-    execute(message, args, tags){
-            var options = {
-                url: "http://results.dogpile.com/serp?qc=images&q=" + "The 1975 gifs",
-                method: "GET",
-                headers: {
-                    "Accept": "text/html",
-                    "User-Agent": "Chrome"
-                }
-            };
-            request(options, function(error, response, responseBody){
-                if(error) {
-                    return;
-                }
+    async execute(message, args, tags){
+        const tenorApiKey = config.TENOR;
 
-                $ = cheerio.load(responseBody);
-
-                var links = $(".image a.link");
-
-                var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
-
-               //console.log(urls);
-                if (!urls.length) {
-                    return;
-                }
-
-                message.channel.send(urls[Math.floor(Math.random() * urls.length)]);
-            });
+        let url = `https://g.tenor.com/v1/search?q=the1975&key=${tenorApiKey}&limit=50`;
+        let response = await fetch(url);
+        let json = await response.json();
+        let index = Math.floor(Math.random() * json.results.length);
+        message.channel.send(json.results[index].url);
     }
 }
