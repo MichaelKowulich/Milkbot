@@ -150,6 +150,7 @@ bot.on("message", async (message) => {
         break;
       //-Image
       //----------------------------------------------
+      /*
       case "IMAGE":
         try {
           if (
@@ -202,7 +203,7 @@ bot.on("message", async (message) => {
             });
           message.channel.send(err);
         }
-        break;
+        break; */
       //-Gif
       //------------------------------------------------
       case "GIF":
@@ -333,11 +334,11 @@ bot.on("message", async (message) => {
             },
             { name: ">Gif", value: "-Posts a random 1975 related gif" },
             { name: ">Help", value: "-Displays this help menu" },
-            {
+          /*  {
               name: ">Image",
               value:
                 '-Displays a random 1975 related image. See ">Image help" for more information',
-            },
+            }, */
             {
               name: ">Lyric",
               value: "-Displays a random 1975 lyric",
