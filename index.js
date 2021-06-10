@@ -339,6 +339,11 @@ bot.on("message", async (message) => {
               value:
                 '-Displays a random official 1975 song artwork (exclusive of roadkill). See ">Artwork help" for more information',
             },
+            {
+              name: ">Cover",
+              value:
+                '-Displays a random official 1975 official album cover See ">Cover help" for more information',
+            },
             { name: ">Gif", value: "-Posts a random 1975 related gif" },
             { name: ">Help", value: "-Displays this help menu" },
           /*  {

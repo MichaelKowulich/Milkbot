@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 module.exports = {
     name: 'cover',
     description: "displays an album cover art from the 1975",
@@ -43,6 +44,7 @@ module.exports = {
             // Input sanitization (allows users to enter one option many ways)
             //
             args[1] = args[1].toLowerCase();
+            if (args[1] != "help") {
             const [first, ...remaining] = args;
             let arg = remaining.join("_");
             switch(arg) {
@@ -100,8 +102,48 @@ module.exports = {
                 if (row != undefined) {
                   let filename = row.albumCoverFile;
                   message.channel.send("", {files:["./album_covers/"+filename]});
+                } else {
+                    var helpMessage = new Discord.MessageEmbed()
+                    .setColor("#3CB371")
+                    .setTitle(
+                        "Please specify one of the following inputs (not case sensitive):"
+                    )
+                    .addFields(
+                        {
+                            name: ">Cover <name_of_album/ep>",
+                            value:
+                            "To select a specific album's/ep's artwork",
+                        },
+                        {
+                            name: ">Cover",
+                            value:
+                            "To select a random album's/ep's artwork",
+                        }
+                    );
+                    message.channel.send(helpMessage);
                 }
               });
+            }
+            else {
+                var helpMessage = new Discord.MessageEmbed()
+                    .setColor("#3CB371")
+                    .setTitle(
+                        "Please specify one of the following inputs (not case sensitive):"
+                    )
+                    .addFields(
+                        {
+                            name: ">Cover <name_of_album/ep>",
+                            value:
+                            "To select a specific album's/ep's artwork",
+                        },
+                        {
+                            name: ">Cover",
+                            value:
+                            "To select a random album's/ep's artwork",
+                        }
+                    );
+                message.channel.send(helpMessage);
+            }
         }
     }
 }
