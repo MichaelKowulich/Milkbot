@@ -211,13 +211,7 @@ module.exports = {
             }
           }
         }
-
-        console.log(question.toString());
-        console.log(answers.toString());
-        console.log(reactionCounts.toString());
         generateImage(canvas, configuration)
-
-
       }
     }
 

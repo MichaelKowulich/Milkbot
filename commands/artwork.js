@@ -1,7 +1,7 @@
 module.exports = {
     name: 'artwork',
     description: "displays 1975 song artwork",
-    execute(message, args,setmin,setmax, tracknumber){
+    execute(message, args, setmin, setmax, tracknumber){
         var max;
         var min;
         var rand;
@@ -15,7 +15,6 @@ module.exports = {
         else {
             message.channel.send("Error: invalid track number");
         }
-        console.log(rand);
         switch(rand) {
             case 1:
                 message.channel.send("", {files:["./images/the_1975(1).jpeg"]});

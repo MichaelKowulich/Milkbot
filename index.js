@@ -317,11 +317,18 @@ bot.on("message", async (message) => {
           message.channel.send(err);
         }
         break;
-      //-Help
+      //-Lyric
       //----------------------------------------------
       case "LYRIC":
         bot.commands.get("lyric").execute(message, args, db);
         break;
+      //-Cover
+      //----------------------------------------------
+      case "COVER":
+        bot.commands.get('cover').execute(message, args, db);
+        break;
+      //-Help
+      //----------------------------------------------
       case "HELP":
         var exampleEmbed = new Discord.MessageEmbed()
           .setColor("	#3CB371")
