@@ -327,6 +327,11 @@ bot.on("message", async (message) => {
       case "COVER":
         bot.commands.get('cover').execute(message, args, db);
         break;
+      //-Promo
+      //----------------------------------------------
+      case "PROMO":
+        bot.commands.get('promo').execute(message, args, db);
+        break;
       //-Help
       //----------------------------------------------
       case "HELP":
@@ -360,6 +365,11 @@ bot.on("message", async (message) => {
               name: ">Poll",
               value:
                 '-Create a new poll! See ">Poll help" for more information',
+            },
+            {
+              name: ">Promo",
+              value:
+                '-Displays a random official 1975 promo image. See ">Promo help" for more information',
             },
             {
               name: ">She Said",

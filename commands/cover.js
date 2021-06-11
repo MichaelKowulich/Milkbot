@@ -51,6 +51,9 @@ module.exports = {
                 case "self_titled":
                     arg = "the_1975";
                 break;
+                case "the_1975":
+                    arg = "the_1975";
+                break;
                 case "i_like_it_when_you_sleep":
                     arg = "iliwys";
                 break;
