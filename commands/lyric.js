@@ -41,7 +41,11 @@ module.exports = {
                           translate(res.text, {to: 'hi'}).then(res => {
                             //console.log(res.text);
                             translate(res.text, {to: 'en'}).then(res => {
-                              message.channel.send(res.text);
+                              message.reply(res.text);
+                              if(args[2] && args[2].toLowerCase() == 'translatedfrom') {
+                                message.channel.send("Translated From: ");
+                                message.channel.send(lyric);
+                              }
                             }).catch(err => {
                               console.error(err);
                             });
