@@ -16,7 +16,7 @@ module.exports = {
         return;
       }
       if (row != undefined) {
-        let lyric = row.description;
+        var lyric = row.description;
         // If the argument silly is not specified
         if(!args[1]) {
           message.channel.send(lyric);
