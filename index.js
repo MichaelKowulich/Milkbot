@@ -2,6 +2,7 @@
 Imports
 */
 
+require('dotenv').config(); 
 const Discord = require("discord.js");
 const cheerio = require("cheerio");
 const request = require("request");
