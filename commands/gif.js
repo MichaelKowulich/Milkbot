@@ -1,11 +1,11 @@
 const fetch = require('node-fetch');
-const config = require('../config.json');
+const config = process.env.TENOR;
 
 module.exports = {
     name: 'gif',
     description: "gives random 1975 image",
     async execute(message, args, tags){
-        const tenorApiKey = config.TENOR;
+        const tenorApiKey = config;
 
         let url = `https://g.tenor.com/v1/search?q=the1975&key=${tenorApiKey}&limit=50`;
         let response = await fetch(url);

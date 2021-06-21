@@ -1,8 +1,8 @@
 /*
 Imports
 */
+
 const Discord = require("discord.js");
-const config = require("./config.json");
 const cheerio = require("cheerio");
 const request = require("request");
 const sqlite = require("sqlite3").verbose();
@@ -27,7 +27,7 @@ Options For Youtube Search
 */
 const opts = {
   maxResults: 1,
-  key: config.YOUTUBE_API,
+  key: process.env.YOUTUBE_API,
   type: "video",
 };
 
@@ -387,4 +387,4 @@ bot.on("message", async (message) => {
   } // end of if (checks for >prefix)
 });
 
-bot.login(config.TOKEN);
+bot.login();
