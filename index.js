@@ -2,7 +2,7 @@
 Imports
 */
 
-const config = require('dotenv').config(); 
+require('dotenv').config(); 
 const Discord = require("discord.js");
 const cheerio = require("cheerio");
 const request = require("request");
@@ -29,7 +29,7 @@ Options For Youtube Search
 const opts = {
   maxResults: 1,
   key: 
-  config.YOUTUBE_API,
+  process.env.YOUTUBE_API,
   type: "video",
 };
 
