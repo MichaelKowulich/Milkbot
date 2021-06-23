@@ -152,9 +152,9 @@ bot.on("message", async (message) => {
         break;
       //-Image
       //----------------------------------------------
-      case "IMAGE":
-        bot.commands.get("image").formatArguments(message, args);
-        break; 
+   //   case "IMAGE":
+     //   bot.commands.get("image").formatArguments(message, args);
+      //  break; 
       //-Gif
       //------------------------------------------------
       case "GIF":

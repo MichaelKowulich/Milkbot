@@ -19,11 +19,11 @@ module.exports = {
                 },
                 { name: ">Gif", value: "-Posts a random 1975 related gif" },
                 { name: ">Help", value: "-Displays this help menu" },
-                {
-                  name: ">Image",
-                  value:
-                    '-Displays a random 1975 related image. See ">Image help" for more information',
-                }, 
+                //{
+                //  name: ">Image",
+                //  value:
+                //    '-Displays a random 1975 related image. See ">Image help" for more information',
+                //}, 
                 {
                   name: ">Lyric",
                   value: "-Displays a random 1975 lyric, or try >lyric silly translatedfrom for a silly google translated 1975 lyric",
