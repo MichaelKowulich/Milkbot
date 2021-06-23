@@ -2,7 +2,7 @@
 Imports
 */
 
-require('dotenv').config(); 
+const config = require('dotenv').config(); 
 const Discord = require("discord.js");
 const cheerio = require("cheerio");
 const request = require("request");
@@ -28,7 +28,8 @@ Options For Youtube Search
 */
 const opts = {
   maxResults: 1,
-  key: process.env.YOUTUBE_API,
+  key: 
+  config.YOUTUBE_API,
   type: "video",
 };
 
@@ -151,60 +152,9 @@ bot.on("message", async (message) => {
         break;
       //-Image
       //----------------------------------------------
-      /*
       case "IMAGE":
-        try {
-          if (
-            !args[1] ||
-            args[1].toUpperCase() == "THE1975" ||
-            (args[1].toUpperCase() === "THE" && args[2] === "1975")
-          ) {
-            bot.commands.get("image").execute(message, args, "the 1975");
-          } else if (args[1].toUpperCase() === "HELP") {
-            throw TypeError;
-          } else if (
-            args[1].toUpperCase() === "ADAM" ||
-            args[1].toUpperCase() === "HANN"
-          ) {
-            bot.commands
-              .get("image")
-              .execute(message, args, "Adam Hann The 1975");
-          } else if (args[1].toUpperCase() === "GEORGE") {
-            bot.commands
-              .get("image")
-              .execute(message, args, "George Daniel The 1975");
-          } else if (
-            args[1].toUpperCase() === "MATTY" ||
-            args[1].toUpperCase() === "MATT" ||
-            args[1].toUpperCase() === "MATTHEW"
-          ) {
-            bot.commands
-              .get("image")
-              .execute(message, args, "Matty Healy The 1975");
-          } else if (
-            args[1].toUpperCase() === "ROSS" ||
-            args[1].toUpperCase() == "RASS"
-          ) {
-            bot.commands
-              .get("image")
-              .execute(message, args, "Ross MacDonald The 1975");
-          } else {
-            throw TypeError;
-          }
-        } catch (TypeError) {
-          var err = new Discord.MessageEmbed()
-            .setColor("#3CB371")
-            .setTitle(
-              "Please Format >Image Command as follows (not case sensitive):"
-            )
-            .addFields({
-              name: ">Image (the1975/Matty/Ross/George/Adam)",
-              value:
-                'Note: Providing no options will result in the same operation as ">Image The 1975"',
-            });
-          message.channel.send(err);
-        }
-        break; */
+        bot.commands.get("image").formatArguments(message, args);
+        break; 
       //-Gif
       //------------------------------------------------
       case "GIF":
@@ -336,53 +286,7 @@ bot.on("message", async (message) => {
       //-Help
       //----------------------------------------------
       case "HELP":
-        var exampleEmbed = new Discord.MessageEmbed()
-          .setColor("	#3CB371")
-          .setTitle("--:milk: MilkBot Menu :milk:--")
-          .addFields(
-            {
-              name: ">Artwork",
-              value:
-                '-Displays a random official 1975 song artwork (exclusive of roadkill). See ">Artwork help" for more information',
-            },
-            {
-              name: ">Cover",
-              value:
-                '-Displays a random official 1975 official album cover See ">Cover help" for more information',
-            },
-            { name: ">Gif", value: "-Posts a random 1975 related gif" },
-            { name: ">Help", value: "-Displays this help menu" },
-          /*  {
-              name: ">Image",
-              value:
-                '-Displays a random 1975 related image. See ">Image help" for more information',
-            }, */
-            {
-              name: ">Lyric",
-              value: "-Displays a random 1975 lyric",
-            },
-            { name: ">Ping", value: "-Tests if bot is online" },
-            {
-              name: ">Poll",
-              value:
-                '-Create a new poll! See ">Poll help" for more information',
-            },
-            {
-              name: ">Promo",
-              value:
-                '-Displays a random official 1975 promo image. See ">Promo help" for more information',
-            },
-            {
-              name: ">She Said",
-              value: '-Gives a random "She said" 1975 lyric',
-            },
-            {
-              name: ">Suggest",
-              value:
-                "-Suggests a random (the 1975/Drive Like I Do) song to listen to",
-            }
-          );
-        message.channel.send(exampleEmbed);
+        bot.commands.get('help').execute(message, args);
         break; //Break for Help
     } //end of switch(args[0])
   } // end of if (checks for >prefix)

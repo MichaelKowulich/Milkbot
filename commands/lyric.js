@@ -22,27 +22,46 @@ module.exports = {
           message.channel.send(lyric);
         // If the argument silly is specified
         } else if (args[1].toLowerCase() == "silly") {
-          translate(lyric, {to: 'es'}).then(res => {
-            //console.log(res.text);
-            translate(res.text, {to: 'ru'}).then(res => {
-              //console.log(res.text);
-              translate(res.text, {to: 'nl'}).then(res => {
-                //console.log(res.text);
-                translate(res.text, {to: 'zh-CN'}).then(res => {
-                  //console.log(res.text);
-                  translate(res.text, {to: 'fr'}).then(res => {
-                    //console.log(res.text);
-                    translate(res.text, {to: 'et'}).then(res => {
-                      //console.log(res.text);
-                      translate(res.text, {to: 'he'}).then(res => {
-                        //console.log(res.text);
-                        translate(res.text, {to: 'hr'}).then(res => {
-                          //console.log(res.text);
-                          translate(res.text, {to: 'hi'}).then(res => {
-                            //console.log(res.text);
+          var languages = [
+            'es',
+            'ru',
+            'nl',
+            'zh-CN',
+            'fr',
+            'et',
+            'he',
+            'hr',
+            'hi',
+            'ny',
+            'bs',
+            'id',
+            'ko',
+            'pl'
+          ];
+          var max = languages.length-1;
+          var min = 0;
+          var rand = Math.floor(Math.random() * (max - min) + min);
+          translate(lyric, {to: languages[rand]}).then(res => {
+            rand = Math.floor(Math.random() * (max - min) + min);
+            translate(res.text, {to: languages[rand]}).then(res => {
+              rand = Math.floor(Math.random() * (max - min) + min);
+              translate(res.text, {to: languages[rand]}).then(res => {
+                rand = Math.floor(Math.random() * (max - min) + min);
+                translate(res.text, {to: languages[rand]}).then(res => {
+                  rand = Math.floor(Math.random() * (max - min) + min);
+                  translate(res.text, {to: languages[rand]}).then(res => {
+                    rand = Math.floor(Math.random() * (max - min) + min);
+                    translate(res.text, {to: languages[rand]}).then(res => {
+                      rand = Math.floor(Math.random() * (max - min) + min);
+                      translate(res.text, {to: languages[rand]}).then(res => {
+                        rand = Math.floor(Math.random() * (max - min) + min);
+                        translate(res.text, {to: languages[rand]}).then(res => {
+                          rand = Math.floor(Math.random() * (max - min) + min);
+                          translate(res.text, {to: languages[rand]}).then(res => {
+                            rand = Math.floor(Math.random() * (max - min) + min);
                             translate(res.text, {to: 'en'}).then(res => {
                               message.reply(res.text);
-                              if(args[2] && args[2].toLowerCase() == 'translatedfrom') {
+                              if(args[2] && (args[2].toLowerCase() == 'translatedfrom' || args[2].toLowerCase() == 'tf')) {
                                 message.channel.send("Translated From: ");
                                 message.channel.send(lyric);
                               }
